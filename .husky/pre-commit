@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+
+
+
+if git ls-files "*.sln" "*.csproj" | grep -q .; then
+  echo "▶ dotnet format --verify-no-changes"
+  dotnet format --verify-no-changes
+else
+  echo "ℹ  no .sln/.csproj yet, skipping dotnet format"
+fi
+
+
+if git ls-files *.csproj | grep -i Tests >/dev/null 2>&1; then
+  echo "▶ dotnet test --nologo"
+  dotnet test --nologo
+else
+  echo "ℹ  no *.Tests.csproj yet, skipping dotnet test"
+fi
+
+if [ -f "package.json" ]; then
+  echo "▶ lint-staged"
+  npx lint-staged
+fi
