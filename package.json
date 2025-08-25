@@ -6,7 +6,11 @@
   "scripts": {
     "lint": "eslint . --max-warnings=0",
     "format": "prettier -w .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "format:cs": "dotnet format",
+    "format:js": "prettier -w .",
+    "tidy": "npm run format:cs && npm run format:js",
+    "check": "dotnet format --verify-no-changes && prettier --check ."
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,md,json}": [
